@@ -1,3 +1,4 @@
+{% load bootstrap4 %} 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +11,20 @@
   {% else %} 
     <title>Moringa Tribune </title>
   {% endif %}   
+
+  {% block styles %} 
+    {% bootstrap_css %} 
+  {% endblock %}   
 </head>
 <body>
    {% block content %} 
-     <h1> News for {{date|date:"1 d-F Y"}}</h1>
+     <h1 class="text-center"> News for {{date|date:"1 d-F Y"}}</h1>
    {% endblock %}  
-  
+
+   {% block scripts %} 
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+   {% endblock %} 
+
 </body>
 </html>
