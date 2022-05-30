@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404,HttpResponseRedirect
 import datetime as dt
 from .models import Article, NewsLetterRecipients
 from .forms import NewsLetterForm
+from .email import send_welcome_email
 
 # Create your views here.
 def news_today(request):
@@ -14,8 +15,11 @@ def news_today(request):
     if form.is_valid():
       name = form.cleaned_data['your_name']
       email = form.cleaned_data['email']
+      
       recipient = NewsLetterRecipients(name = name, email = email)
       recipient.save()
+      send_welcome_email(name, email)
+
       HttpResponseRedirect('news_today')
   else:
       form = NewsLetterForm()
@@ -52,7 +56,10 @@ def article(request,article_id):
     article = Article.objects.get(id = article_id)
   except:
     raise Http404()
-  return render(request,'all-news/article.html', {"article":article})  
+  return render(request,'all-news/article.html', {"article":article}) 
+
+
+
 
 
 
