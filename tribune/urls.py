@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('news.urls')),
     re_path('logout/$', views.LogoutView.as_view(), {"next_page": '/'}),
+    path('tinymce/', include('tinymce.urls')),
 ]
