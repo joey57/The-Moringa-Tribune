@@ -2,6 +2,8 @@ from os import stat
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404,HttpResponseRedirect, JsonResponse
 import datetime as dt
+
+from .permissions import IsAdminOrReadOnly
 from .models import Article, NewsLetterRecipients, MoringaMerch
 from .forms import NewsLetterForm, NewsArticleForm
 from .email import send_welcome_email
@@ -81,6 +83,7 @@ class MerchList(APIView):
   def get(self, request, format=None):
     all_merch = MoringaMerch.objects.all()
     serializers = MerchSerializer(all_merch, many=True)
+    permission_classes = (IsAdminOrReadOnly)
     return Response(serializers.data)
 
   def post(self, request, format=None):
